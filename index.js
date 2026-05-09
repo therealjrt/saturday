@@ -9,6 +9,7 @@ const html = `<!DOCTYPE html>
   <style>
     html {
       height: 100%;
+      animation: hue-freak 4s linear infinite;
     }
 
     html,
@@ -16,27 +17,30 @@ const html = `<!DOCTYPE html>
       margin: 0;
       min-height: 100%;
       color: #fff;
+      overflow: hidden;
     }
 
     body {
       display: grid;
       place-items: center;
       font-family: system-ui, sans-serif;
-      font-size: clamp(1.5rem, 5vw, 3rem);
+      font-size: clamp(1.75rem, 6vw, 3.5rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       background: linear-gradient(
-        125deg,
-        #422006,
-        #713f12,
-        #a16207,
+        -45deg,
+        #0f172a,
+        #7c3aed,
+        #db2777,
+        #f97316,
         #eab308,
-        #fde047,
-        #eab308,
-        #713f12,
-        #422006
+        #22c55e,
+        #0ea5e9,
+        #0f172a
       );
-      background-size: 320% 320%;
-      animation: bg-shift 14s ease-in-out infinite;
-      /* Perspective on the grid box so nested 3D is not flattened by the layout root. */
+      background-size: 500% 500%;
+      animation: bg-rave 2.8s ease-in-out infinite;
       -webkit-perspective: clamp(520px, 95vmin, 1600px);
       -webkit-perspective-origin: 50% 42%;
       perspective: clamp(520px, 95vmin, 1600px);
@@ -45,7 +49,27 @@ const html = `<!DOCTYPE html>
       -webkit-transform-style: preserve-3d;
     }
 
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -60%;
+      z-index: 0;
+      background: conic-gradient(
+        from 0deg,
+        #f0f,
+        #ff0,
+        #0ff,
+        #f0f
+      );
+      opacity: 0.22;
+      mix-blend-mode: hard-light;
+      animation: vortex 7s linear infinite;
+      pointer-events: none;
+    }
+
     .stage {
+      position: relative;
+      z-index: 1;
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
     }
@@ -54,6 +78,15 @@ const html = `<!DOCTYPE html>
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
       animation: tumble 18s ease-in-out infinite;
+    }
+
+    .wrap {
+      text-align: center;
+      max-width: 95vw;
+      filter: drop-shadow(0 0 0.08em #0ff) drop-shadow(0 0 0.12em #f0f);
+      animation: glow-pulse 1.1s ease-in-out infinite alternate;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
     }
 
     .hello-wrap {
@@ -70,21 +103,57 @@ const html = `<!DOCTYPE html>
       animation: hello 2.45s cubic-bezier(0.33, 1.15, 0.55, 1) infinite;
     }
 
-    .rotate {
+    .wild {
       display: inline-block;
+      animation: chaos-move 1.8s linear infinite;
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
-      transform-origin: center center;
-      animation: spin-3d 22s linear infinite;
     }
 
-    @keyframes bg-shift {
+    .spin {
+      display: inline-block;
+      transform-origin: center center;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      animation: spin-3d 3.2s linear infinite;
+    }
+
+    .pulse {
+      display: inline-block;
+      animation: wobble-scale 0.65s ease-in-out infinite alternate;
+    }
+
+    @keyframes bg-rave {
       0%,
       100% {
-        background-position: 0% 40%;
+        background-position: 0% 50%;
       }
       50% {
-        background-position: 100% 60%;
+        background-position: 100% 50%;
+      }
+    }
+
+    @keyframes hue-freak {
+      0% {
+        filter: hue-rotate(0deg) saturate(1.5) contrast(1.1);
+      }
+      100% {
+        filter: hue-rotate(360deg) saturate(1.5) contrast(1.1);
+      }
+    }
+
+    @keyframes vortex {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes glow-pulse {
+      from {
+        filter: drop-shadow(0 0 0.06em #0ff) drop-shadow(0 0 0.1em #f0f);
+      }
+      to {
+        filter: drop-shadow(0 0 0.18em #ff0) drop-shadow(0 0 0.22em #f0f);
       }
     }
 
@@ -134,6 +203,60 @@ const html = `<!DOCTYPE html>
       }
     }
 
+    @keyframes chaos-move {
+      0% {
+        transform: translate(0, 0) rotate(0deg) skew(0deg, 0deg) scale(1);
+      }
+      8% {
+        transform: translate(3vw, -2vh) rotate(-4deg) skew(6deg, -2deg)
+          scale(1.05);
+      }
+      16% {
+        transform: translate(-4vw, 1vh) rotate(5deg) skew(-5deg, 4deg)
+          scale(0.96);
+      }
+      24% {
+        transform: translate(2vw, 3vh) rotate(-6deg) skew(3deg, 5deg)
+          scale(1.08);
+      }
+      32% {
+        transform: translate(-3vw, -3vh) rotate(7deg) skew(-8deg, 0deg)
+          scale(1.02);
+      }
+      40% {
+        transform: translate(5vw, 1vh) rotate(-3deg) skew(2deg, -6deg)
+          scale(0.94);
+      }
+      48% {
+        transform: translate(-2vw, 2vh) rotate(4deg) skew(-3deg, 3deg)
+          scale(1.1);
+      }
+      56% {
+        transform: translate(1vw, -4vh) rotate(-8deg) skew(7deg, 2deg)
+          scale(1);
+      }
+      64% {
+        transform: translate(-5vw, -1vh) rotate(6deg) skew(-4deg, -5deg)
+          scale(1.06);
+      }
+      72% {
+        transform: translate(4vw, 2vh) rotate(-2deg) skew(5deg, -3deg)
+          scale(0.98);
+      }
+      80% {
+        transform: translate(-1vw, -2vh) rotate(3deg) skew(-2deg, 6deg)
+          scale(1.04);
+      }
+      88% {
+        transform: translate(2vw, 4vh) rotate(-5deg) skew(4deg, 3deg)
+          scale(1);
+      }
+      96%,
+      100% {
+        transform: translate(0, 0) rotate(0deg) skew(0deg, 0deg) scale(1);
+      }
+    }
+
     @keyframes spin-3d {
       from {
         transform: rotateZ(0deg);
@@ -143,16 +266,43 @@ const html = `<!DOCTYPE html>
       }
     }
 
+    @keyframes wobble-scale {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.18);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      html,
+      html {
+        animation: none;
+        filter: none;
+      }
+
       body {
         animation: none;
+        filter: none;
         background: #ca8a04;
+        background-size: auto;
+      }
+
+      body::before {
+        animation: none;
+        opacity: 0;
+      }
+
+      .wrap {
+        animation: none;
+        filter: none;
       }
 
       .tumble,
       .hello-wrap,
-      .rotate {
+      .wild,
+      .spin,
+      .pulse {
         animation: none;
       }
 
@@ -165,7 +315,13 @@ const html = `<!DOCTYPE html>
 <body>
   <div class="stage">
     <div class="tumble">
-      <p class="hello-wrap"><span class="rotate">Hello, World!</span></p>
+      <div class="wrap">
+        <p class="hello-wrap">
+          <span class="wild">
+            <span class="spin"><span class="pulse">Hello, World!</span></span>
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </body>
@@ -193,7 +349,7 @@ const onListening = () => {
     );
   }
   console.log(
-    `\x1b[93m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted yellow`,
+    `\x1b[35m\x1b[1mhttp://localhost:${bound}\x1b[0m — maximum chaos`,
   );
 };
 
