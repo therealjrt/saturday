@@ -34,6 +34,12 @@ const html = `<!DOCTYPE html>
       animation: hello 5s ease-in-out infinite;
     }
 
+    .rotate {
+      display: inline-block;
+      transform-origin: center center;
+      animation: spin 22s linear infinite;
+    }
+
     @keyframes bg-shift {
       0%,
       100% {
@@ -60,6 +66,15 @@ const html = `<!DOCTYPE html>
       }
     }
 
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html,
       body {
@@ -67,14 +82,15 @@ const html = `<!DOCTYPE html>
         background: #0d7d3d;
       }
 
-      p {
+      p,
+      .rotate {
         animation: none;
       }
     }
   </style>
 </head>
 <body>
-  <p>Hello, World!</p>
+  <p><span class="rotate">Hello, World!</span></p>
 </body>
 </html>`;
 
