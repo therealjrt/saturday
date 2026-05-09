@@ -27,17 +27,34 @@ const html = `<!DOCTYPE html>
       animation: bg-shift 14s ease-in-out infinite;
     }
 
-    p {
+    .stage {
+      perspective: min(100vmin, 48rem);
+      perspective-origin: 50% 45%;
+    }
+
+    .tumble {
+      transform-style: preserve-3d;
+      animation: tumble 18s ease-in-out infinite;
+    }
+
+    .hello-wrap {
       margin: 0;
       text-align: center;
-      text-shadow: 0 0.08em 0.35em rgba(0, 0, 0, 0.35);
+      transform-style: preserve-3d;
+      text-shadow:
+        0 0.02em 0 #047857,
+        0 0.04em 0 #065f46,
+        0 0.06em 0 #064e3b,
+        0 0.08em 0.12em rgba(0, 0, 0, 0.45),
+        0 0.14em 0.35em rgba(0, 0, 0, 0.35);
       animation: hello 5s ease-in-out infinite;
     }
 
     .rotate {
       display: inline-block;
+      transform-style: preserve-3d;
       transform-origin: center center;
-      animation: spin 22s linear infinite;
+      animation: spin-3d 22s linear infinite;
     }
 
     @keyframes bg-shift {
@@ -50,28 +67,41 @@ const html = `<!DOCTYPE html>
       }
     }
 
+    @keyframes tumble {
+      0%,
+      100% {
+        transform: rotateX(14deg) rotateY(-22deg) translateZ(0);
+      }
+      33% {
+        transform: rotateX(-8deg) rotateY(8deg) translateZ(0.15em);
+      }
+      66% {
+        transform: rotateX(6deg) rotateY(20deg) translateZ(-0.08em);
+      }
+    }
+
     @keyframes hello {
       0%,
       100% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0) translateZ(0) scale(1);
         letter-spacing: 0;
       }
       45% {
-        transform: translateY(-0.12em) scale(1.02);
+        transform: translateY(-0.12em) translateZ(0.2em) scale(1.02);
         letter-spacing: 0.02em;
       }
       55% {
-        transform: translateY(-0.08em) scale(1.01);
+        transform: translateY(-0.08em) translateZ(0.12em) scale(1.01);
         letter-spacing: 0.06em;
       }
     }
 
-    @keyframes spin {
+    @keyframes spin-3d {
       from {
-        transform: rotate(0deg);
+        transform: rotateZ(0deg);
       }
       to {
-        transform: rotate(360deg);
+        transform: rotateZ(360deg);
       }
     }
 
@@ -82,15 +112,24 @@ const html = `<!DOCTYPE html>
         background: #0d7d3d;
       }
 
-      p,
+      .tumble,
+      .hello-wrap,
       .rotate {
         animation: none;
+      }
+
+      .tumble {
+        transform: rotateX(10deg) rotateY(-12deg);
       }
     }
   </style>
 </head>
 <body>
-  <p><span class="rotate">Hello, World!</span></p>
+  <div class="stage">
+    <div class="tumble">
+      <p class="hello-wrap"><span class="rotate">Hello, World!</span></p>
+    </div>
+  </div>
 </body>
 </html>`;
 
