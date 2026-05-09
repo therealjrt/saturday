@@ -10,7 +10,7 @@ const html = `<!DOCTYPE html>
     html, body {
       margin: 0;
       min-height: 100%;
-      background: #b30000;
+      background: #0b57d0;
       color: #fff;
       display: grid;
       place-items: center;
@@ -24,15 +24,42 @@ const html = `<!DOCTYPE html>
 </body>
 </html>`;
 
-const port = Number(process.env.PORT) || 3000;
+const preferredPort = Number(process.env.PORT) || 3000;
+const portCeiling = preferredPort + 30;
 
-http
-  .createServer((req, res) => {
-    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    res.end(html);
-  })
-  .listen(port, () => {
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+  res.end(html);
+});
+
+let currentPort = preferredPort;
+
+const onListening = () => {
+  const addr = server.address();
+  const bound = addr && typeof addr === "object" ? addr.port : currentPort;
+  if (bound !== preferredPort) {
     console.log(
-      `\x1b[31m\x1b[1mhttp://localhost:${port}\x1b[0m — painted red`,
+      `\x1b[33mPort ${preferredPort} in use — bound to ${bound}\x1b[0m`,
     );
-  });
+  }
+  console.log(
+    `\x1b[34m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted blue`,
+  );
+};
+
+server.on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
+    currentPort += 1;
+    if (currentPort > portCeiling) {
+      console.error(
+        `No free port from ${preferredPort} through ${portCeiling}.`,
+      );
+      process.exit(1);
+    }
+    server.listen(currentPort, onListening);
+    return;
+  }
+  throw err;
+});
+
+server.listen(currentPort, onListening);
