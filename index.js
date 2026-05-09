@@ -67,7 +67,7 @@ const html = `<!DOCTYPE html>
         0 0.06em 0 #713f12,
         0 0.08em 0.12em rgba(66, 32, 6, 0.5),
         0 0.14em 0.35em rgba(0, 0, 0, 0.35);
-      animation: hello 5s ease-in-out infinite;
+      animation: hello 2.45s cubic-bezier(0.33, 1.15, 0.55, 1) infinite;
     }
 
     .rotate {
@@ -104,16 +104,33 @@ const html = `<!DOCTYPE html>
     @keyframes hello {
       0%,
       100% {
-        transform: translateY(0) translateZ(0) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
         letter-spacing: 0;
       }
-      45% {
-        transform: translateY(-0.12em) translateZ(48px) scale(1.02);
-        letter-spacing: 0.02em;
+      12% {
+        transform: translate3d(0, -0.03em, 6px) scale(1.01);
       }
-      55% {
-        transform: translateY(-0.08em) translateZ(28px) scale(1.01);
-        letter-spacing: 0.06em;
+      28% {
+        transform: translate3d(0, -0.52em, 64px) scale(1.06);
+        letter-spacing: 0.05em;
+      }
+      40% {
+        transform: translate3d(0, 0, 12px) scale(0.96);
+      }
+      50% {
+        transform: translate3d(0, -0.22em, 44px) scale(1.03);
+        letter-spacing: 0.03em;
+      }
+      60% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      72% {
+        transform: translate3d(0, -0.1em, 22px) scale(1.02);
+      }
+      82%,
+      92% {
+        transform: translate3d(0, 0, 0) scale(1);
+        letter-spacing: 0;
       }
     }
 
