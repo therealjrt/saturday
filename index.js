@@ -10,7 +10,7 @@ const html = `<!DOCTYPE html>
     html, body {
       margin: 0;
       min-height: 100%;
-      background: #0b57d0;
+      background: #0d7d3d;
       color: #fff;
       display: grid;
       place-items: center;
@@ -43,7 +43,7 @@ const onListening = () => {
     );
   }
   console.log(
-    `\x1b[34m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted blue`,
+    `\x1b[32m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted green`,
   );
 };
 
