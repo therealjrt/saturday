@@ -17,11 +17,12 @@ const html = `<!DOCTYPE html>
       font-size: clamp(1.5rem, 5vw, 3rem);
       background: linear-gradient(
         125deg,
-        #064e2b,
-        #0d7d3d,
-        #16a34a,
-        #0d7d3d,
-        #064e2b
+        #701a3d,
+        #9d174d,
+        #db2777,
+        #f472b6,
+        #db2777,
+        #701a3d
       );
       background-size: 320% 320%;
       animation: bg-shift 14s ease-in-out infinite;
@@ -79,7 +80,7 @@ const html = `<!DOCTYPE html>
       html,
       body {
         animation: none;
-        background: #0d7d3d;
+        background: #db2777;
       }
 
       p,
@@ -113,7 +114,7 @@ const onListening = () => {
     );
   }
   console.log(
-    `\x1b[32m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted green`,
+    `\x1b[95m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted pink`,
   );
 };
 
