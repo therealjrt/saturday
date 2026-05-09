@@ -25,12 +25,14 @@ const html = `<!DOCTYPE html>
       font-size: clamp(1.5rem, 5vw, 3rem);
       background: linear-gradient(
         125deg,
-        #701a3d,
-        #9d174d,
-        #db2777,
-        #f472b6,
-        #db2777,
-        #701a3d
+        #422006,
+        #713f12,
+        #a16207,
+        #eab308,
+        #fde047,
+        #eab308,
+        #713f12,
+        #422006
       );
       background-size: 320% 320%;
       animation: bg-shift 14s ease-in-out infinite;
@@ -60,10 +62,10 @@ const html = `<!DOCTYPE html>
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
       text-shadow:
-        0 0.02em 0 #047857,
-        0 0.04em 0 #065f46,
-        0 0.06em 0 #064e3b,
-        0 0.08em 0.12em rgba(0, 0, 0, 0.45),
+        0 0.02em 0 #a16207,
+        0 0.04em 0 #854d0e,
+        0 0.06em 0 #713f12,
+        0 0.08em 0.12em rgba(66, 32, 6, 0.5),
         0 0.14em 0.35em rgba(0, 0, 0, 0.35);
       animation: hello 5s ease-in-out infinite;
     }
@@ -128,7 +130,7 @@ const html = `<!DOCTYPE html>
       html,
       body {
         animation: none;
-        background: #db2777;
+        background: #ca8a04;
       }
 
       .tumble,
@@ -174,7 +176,7 @@ const onListening = () => {
     );
   }
   console.log(
-    `\x1b[95m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted pink`,
+    `\x1b[93m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted yellow`,
   );
 };
 
