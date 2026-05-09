@@ -7,10 +7,18 @@ const html = `<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Saturday</title>
   <style>
-    html, body {
+    html {
+      height: 100%;
+    }
+
+    html,
+    body {
       margin: 0;
       min-height: 100%;
       color: #fff;
+    }
+
+    body {
       display: grid;
       place-items: center;
       font-family: system-ui, sans-serif;
@@ -25,15 +33,23 @@ const html = `<!DOCTYPE html>
       );
       background-size: 320% 320%;
       animation: bg-shift 14s ease-in-out infinite;
+      /* Perspective on the grid box so nested 3D is not flattened by the layout root. */
+      -webkit-perspective: clamp(520px, 95vmin, 1600px);
+      -webkit-perspective-origin: 50% 42%;
+      perspective: clamp(520px, 95vmin, 1600px);
+      perspective-origin: 50% 42%;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
     }
 
     .stage {
-      perspective: min(100vmin, 48rem);
-      perspective-origin: 50% 45%;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
     }
 
     .tumble {
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
       animation: tumble 18s ease-in-out infinite;
     }
 
@@ -41,6 +57,7 @@ const html = `<!DOCTYPE html>
       margin: 0;
       text-align: center;
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
       text-shadow:
         0 0.02em 0 #047857,
         0 0.04em 0 #065f46,
@@ -53,6 +70,7 @@ const html = `<!DOCTYPE html>
     .rotate {
       display: inline-block;
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
       transform-origin: center center;
       animation: spin-3d 22s linear infinite;
     }
@@ -70,13 +88,13 @@ const html = `<!DOCTYPE html>
     @keyframes tumble {
       0%,
       100% {
-        transform: rotateX(14deg) rotateY(-22deg) translateZ(0);
+        transform: rotateX(18deg) rotateY(-36deg) translateZ(0);
       }
       33% {
-        transform: rotateX(-8deg) rotateY(8deg) translateZ(0.15em);
+        transform: rotateX(-12deg) rotateY(12deg) translateZ(36px);
       }
       66% {
-        transform: rotateX(6deg) rotateY(20deg) translateZ(-0.08em);
+        transform: rotateX(10deg) rotateY(32deg) translateZ(-24px);
       }
     }
 
@@ -87,11 +105,11 @@ const html = `<!DOCTYPE html>
         letter-spacing: 0;
       }
       45% {
-        transform: translateY(-0.12em) translateZ(0.2em) scale(1.02);
+        transform: translateY(-0.12em) translateZ(48px) scale(1.02);
         letter-spacing: 0.02em;
       }
       55% {
-        transform: translateY(-0.08em) translateZ(0.12em) scale(1.01);
+        transform: translateY(-0.08em) translateZ(28px) scale(1.01);
         letter-spacing: 0.06em;
       }
     }
@@ -119,7 +137,7 @@ const html = `<!DOCTYPE html>
       }
 
       .tumble {
-        transform: rotateX(10deg) rotateY(-12deg);
+        transform: rotateX(14deg) rotateY(-22deg);
       }
     }
   </style>
@@ -150,11 +168,18 @@ const onListening = () => {
     console.log(
       `\x1b[33mPort ${preferredPort} in use — bound to ${bound}\x1b[0m`,
     );
+    console.log(
+      "\x1b[33mIf old servers are suspended (Ctrl+Z), run `fg` then exit with Ctrl+C, or close those terminals.\x1b[0m",
+    );
   }
   console.log(
     `\x1b[32m\x1b[1mhttp://localhost:${bound}\x1b[0m — painted green`,
   );
 };
+
+// Do not pass onListening to listen() on each port retry — Node stacks that as
+// extra "listening" listeners and triggers MaxListenersExceededWarning.
+server.on("listening", onListening);
 
 server.on("error", (err) => {
   if (err.code === "EADDRINUSE") {
@@ -165,10 +190,10 @@ server.on("error", (err) => {
       );
       process.exit(1);
     }
-    server.listen(currentPort, onListening);
+    server.listen(currentPort);
     return;
   }
   throw err;
 });
 
-server.listen(currentPort, onListening);
+server.listen(currentPort);
